@@ -5,7 +5,8 @@ import org.alfresco.repo.security.authentication.AuthenticationUtil;
 import org.alfresco.repo.tenant.TenantUtil;
 import org.alfresco.util.Pair;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.Scriptable;
@@ -14,7 +15,7 @@ import org.mozilla.javascript.ScriptableObject;
 
 public class Sudo extends BaseScopableProcessorExtension {
 
-    private final Logger logger = Logger.getLogger(Sudo.class);
+    private final Logger logger = LoggerFactory.getLogger(Sudo.class);
 
     public Object su(final Function func) {
 

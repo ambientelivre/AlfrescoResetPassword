@@ -11,7 +11,8 @@ import org.alfresco.service.cmr.workflow.WorkflowTask;
 import org.alfresco.service.cmr.workflow.WorkflowTaskQuery;
 import org.alfresco.service.cmr.workflow.WorkflowTaskState;
 import org.alfresco.util.Pair;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class WorkflowHelper {
 
     private static WorkflowService workflowService;
 
-    private static Logger logger = Logger.getLogger(WorkflowHelper.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WorkflowHelper.class);
 
     private static HistoryService activitiHistoryService;
 
@@ -35,18 +36,18 @@ public class WorkflowHelper {
 
                 List<WorkflowTask> workflowTasks = getTasksInProgress(userName);
 
-                if(logger.isDebugEnabled()) {
-                    logger.debug("Found workflow tasks = " + workflowTasks.size());
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Found workflow tasks = " + workflowTasks.size());
                 }
 
                 for (WorkflowTask task : workflowTasks) {
-                    if (logger.isDebugEnabled()) {
-                        logger.debug("Current task: " + task.getName());
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Current task: " + task.getName());
                     }
 
                     if ("fs-reset:review".equals(task.getName())) {
-                        if (logger.isDebugEnabled()) {
-                            logger.debug("Try to end task " + task.toString());
+                        if (LOGGER.isDebugEnabled()) {
+                            LOGGER.debug("Try to end task " + task.toString());
                         }
                         workflowService.cancelWorkflow(task.getPath().getInstance().getId());
                     }
@@ -72,8 +73,8 @@ public class WorkflowHelper {
         query.setTaskState(WorkflowTaskState.IN_PROGRESS);
         query.setActorId(userName);
 
-        if (logger.isDebugEnabled()) {
-            logger.debug("Try to delete workflows...");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Try to delete workflows...");
         }
 
         return workflowService.queryTasks(query, true);
